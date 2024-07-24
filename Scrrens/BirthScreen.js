@@ -10,7 +10,11 @@ import {
   import React, {useRef, useState, useEffect} from 'react';
   import {useNavigation} from '@react-navigation/native';
   import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
- 
+  import {
+    getRegistrationProgress,
+    saveRegistrationProgress,
+  } from '../registrationUtils';
+  
   const BirthScreen = () => {
     const navigation = useNavigation();
     const monthRef = useRef(null);
@@ -36,7 +40,21 @@ import {
     const handleYearChange = text => {
       setYear(text);
     };
- 
+
+    useEffect(() => {
+      // Fetch the registration progress data for the "Birth" screen
+      getRegistrationProgress('Birth').then(progressData => {
+        if (progressData) {
+          const {dateOfBirth} = progressData;
+          // Split the date of birth string into day, month, and year
+          const [dayValue, monthValue, yearValue] = dateOfBirth.split('/');
+          // Set the values in the component state
+          setDay(dayValue);
+          setMonth(monthValue);
+          setYear(yearValue);
+        }
+      });
+    }, []);
   
     const handleNext = () => {
       // Check if all the date values are provided
@@ -97,6 +115,7 @@ import {
                 borderColor: 'black',
                 padding: 10,
                 width: 50,
+                color:'blue',
                 fontSize: day ? 20 : 20,
                 fontFamily: 'GeezaPro-Bold',
               }}
@@ -114,6 +133,7 @@ import {
                 borderBottomWidth: 1,
                 borderColor: 'black',
                 padding: 10,
+                color:'blue',
                 width: 60,
                 fontSize: month ? 20 : 20,
                 fontFamily: 'GeezaPro-Bold',
@@ -134,6 +154,7 @@ import {
                 borderColor: 'black',
                 padding: 10,
                 width: 75,
+                color:'blue',
                 fontSize: year ? 20 : 20,
                 fontFamily: 'GeezaPro-Bold',
               }}

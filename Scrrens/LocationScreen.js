@@ -4,6 +4,7 @@ import {
     View,
     SafeAreaView,
     Image,
+    TextInput,
     TouchableOpacity,
   } from 'react-native';
   import React, {useState, useEffect} from 'react';
@@ -11,14 +12,27 @@ import {
   import Geolocation from '@react-native-community/geolocation';
   import {useNavigation} from '@react-navigation/native';
   import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+  import {
+    getRegistrationProgress,
+    saveRegistrationProgress,
+  } from '../registrationUtils';
  
+
   const LocationScreen = () => {
+    const [location, setLocation] = useState('');
+
     const navigation = useNavigation();
  
    
  
    const handleNext = () => {
- 
+    
+    
+    if (location.trim() !== '') {
+      // Save the current progress data including the name
+      saveRegistrationProgress('Location', { location });
+   
+    }
       navigation.navigate('Gender');
     };
     return (
@@ -52,11 +66,32 @@ import {
             style={{
               fontSize: 25,
               fontWeight: 'bold',
+              color:'red',
               fontFamily: 'GeezaPro-Bold',
               marginTop: 15,
             }}>
             Where do you live?
           </Text>
+
+          <TextInput
+            autoFocus={true}
+            value={location}
+            onChangeText={(text) => setLocation(text)}
+            style={{
+              width: 340,
+              marginVertical: 10,
+              fontSize: location ? 22 : 22,
+              marginTop: 25,
+              color:'blue',
+              borderBottomColor: 'black',
+              borderBottomWidth: 1,
+              paddingBottom: 10,
+              fontFamily: 'GeezaPro-Bold',
+            }}
+            placeholder="Enter your Location"
+            placeholderTextColor={'#BEBEBE'}
+          />
+
           <TouchableOpacity
             onPress={handleNext}
             activeOpacity={0.8}
