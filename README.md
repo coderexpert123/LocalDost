@@ -1,5 +1,17 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Local Dost
 
+![Local Dost Logo](./LOGO.png)
+
+## Overview
+
+Local Dost is a community-driven platform that connects people locally, fostering friendships, support, and engagement within neighborhoods. Our mission is to create a network where neighbors can easily connect, share resources, and support each other in everyday life.
+
+## Features
+
+- **Connect with Neighbors**: Find and connect with people in your local area.
+- **Event Creation**: Organize and join local events to meet new friends and strengthen community bonds.
+- **Resource Sharing**: Share and borrow resources from your neighbors.
+- **Support System**: Provide and receive support from your local community.
 # Getting Started
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
