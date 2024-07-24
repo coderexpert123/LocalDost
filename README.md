@@ -70,19 +70,21 @@ If you can't get this to work, see the [Troubleshooting](https://reactnative.dev
 
 # Folder Structure 
 
-Screen 
-      BasicInfo
-      NameScreen
-      EmailScreen
-      Password
-      BirthScreen
-      LocationScreen
-      GenderScreen
-      TypeScreen
-      DatingType
-      LookingFor
-      HomeTownScreen
-      PhotoScreen
-      PromptsScreen
-      ShowPromptsScreen
-      PreFinalScreen
+# Screens Overview
+
+- **BasicInfo**
+- **NameScreen**
+- **EmailScreen**
+- **Password**
+- **BirthScreen**
+- **LocationScreen**
+- **GenderScreen**
+- **TypeScreen**
+- **DatingType**
+- **LookingFor**
+- **HomeTownScreen**
+- **PhotoScreen**
+- **PromptsScreen**
+- **ShowPromptsScreen**
+- **PreFinalScreen**
+
