@@ -67,6 +67,7 @@ const PhotoScreen = () => {
                     style={{
                         fontSize: 25,
                         fontWeight: 'bold',
+                        color:'red',
                         fontFamily: 'GeezaPro-Bold',
                         marginTop: 15,
                     }}>
@@ -164,6 +165,7 @@ const PhotoScreen = () => {
                             fontSize: 15,
                             fontWeight: '500',
                             color: '#581845',
+                            
                             marginTop: 3,
                         }}>
                         Add four to six photos
@@ -171,12 +173,14 @@ const PhotoScreen = () => {
                 </View>
 
                 <View style={{ marginTop: 25 }}>
+                    
                     <Text>Add a picture of yourself</Text>
                     <View
                         style={{
                             flexDirection: 'row',
                             alignItems: 'center',
                             gap: 5,
+                        
                             paddingVertical: 5,
                             borderRadius: 5,
                             marginTop: 10,
@@ -191,7 +195,7 @@ const PhotoScreen = () => {
                         <TextInput
                             value={imageUrl}
                             onChangeText={text => setImageUrl(text)}
-                            style={{ color: 'gray', marginVertical: 10, width: 300 }}
+                            style={{ color: 'gray',color:'blue', marginVertical: 10, width: 300 }}
                             placeholder="enter your image url"
                         />
                     </View>
@@ -206,7 +210,7 @@ const PhotoScreen = () => {
                     //   onPress={() => navigation.navigate('Prompts')}
                     onPress={handleNext}
                     activeOpacity={0.8}
-                    style={{ marginTop: 30, marginLeft: 'auto' }}>
+                    style={{ marginTop:1, marginLeft: 'auto' }}>
                     <MaterialCommunityIcons
                         name="arrow-right-circle"
                         size={45}

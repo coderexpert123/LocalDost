@@ -11,15 +11,35 @@ import {
   import React, {useState, useEffect} from 'react';
   import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
   import {useNavigation} from '@react-navigation/native';
+  import AsyncStorage from '@react-native-async-storage/async-storage';
+  import {
+    getRegistrationProgress,
+    saveRegistrationProgress,
+  } from '../registrationUtils';
  
- 
+
   
   const NameScreen = () => {
     const [firstName, setFirstName] = useState('');
     const navigation = useNavigation();
-   
+
+    //use effect for shoing data after exit
+    useEffect(() => {
+      getRegistrationProgress('Name').then(progressData => {
+        if (progressData) {
+          setFirstName(progressData.firstName || '');
+        }
+      });
+    }, []);
   
     const handleNext = () => {
+
+      if (firstName.trim() !== '') {
+        // Save the current progress data including the name
+        saveRegistrationProgress('Name', { firstName });
+     
+      }
+      //Navigate to email screen 
       navigation.navigate('Email');
     };
     return (
@@ -57,6 +77,7 @@ import {
             <Text
               style={{
                 fontSize: 25,
+                color:'red',
                 fontWeight: 'bold',
                 fontFamily: 'GeezaPro-Bold',
               }}>
@@ -74,6 +95,7 @@ import {
                 marginVertical: 10,
                 fontSize: firstName ? 22 : 22,
                 marginTop: 25,
+                color:'blue',
                 borderBottomColor: 'black',
                 borderBottomWidth: 1,
                 paddingBottom: 10,
@@ -82,9 +104,6 @@ import {
               placeholder="First name (required)"
               placeholderTextColor={'#BEBEBE'}
             />
-
-
-
             <TextInput
               style={{
                 width: 340,
@@ -93,6 +112,7 @@ import {
                 marginTop: 25,
                 borderBottomColor: 'black',
                 borderBottomWidth: 1,
+                color:'blue',
                 paddingBottom: 10,
                 fontFamily: 'GeezaPro-Bold',
               }}

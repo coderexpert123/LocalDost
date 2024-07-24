@@ -12,13 +12,25 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
+import { getRegistrationProgress, saveRegistrationProgress } from '../registrationUtils';
 
 const GenderScreen = () => {
   const [gender, setGender] = useState('');
   const navigation = useNavigation();
- 
+  useEffect(() => {
+    getRegistrationProgress('Gender').then((progressData) => {
+      if (progressData) {
+        setGender(progressData.gender || '');
+      }
+    });
+  }, []);
 
   const handleNext = () => {
+    if (gender.trim() !== '') {
+      // Save the current progress data including the name
+      saveRegistrationProgress('Gender', { gender });
+    }
+    // Navigate to the next screen
     navigation.navigate('Type');
   };
   return (
@@ -52,15 +64,15 @@ const GenderScreen = () => {
           style={{
             fontSize: 25,
             fontWeight: 'bold',
-            fontFamily: 'GeezaPro-Bold',
             color:'red',
+            fontFamily: 'GeezaPro-Bold',
             marginTop: 15,
           }}>
           Which gender descibes you the best?
         </Text>
 
         <Text style={{marginTop: 30, fontSize: 15, color: 'gray'}}>
-          Hinge users are matched based on these three gender groups. You can
+          Local Dost users are matched based on these three gender groups. You can
           add more about gender after
         </Text>
 
@@ -71,8 +83,8 @@ const GenderScreen = () => {
               alignItems: 'center',
               justifyContent: 'space-between',
             }}>
-            <Text style={{fontWeight: '500', fontSize: 15 ,color:'red'}}>Men</Text>
-            <Pressable >
+            <Text style={{fontWeight: '500',color:'blue', fontSize: 15}}>Men</Text>
+            <Pressable onPress={() => setGender('Men')}>
               <FontAwesome
                 name="circle"
                 size={26}
@@ -87,8 +99,8 @@ const GenderScreen = () => {
               justifyContent: 'space-between',
               marginVertical: 12,
             }}>
-            <Text style={{fontWeight: '500', fontSize: 15 ,color:'red'}}>Women</Text>
-            <Pressable >
+            <Text style={{fontWeight: '500', color:'blue',fontSize: 15}}>Women</Text>
+            <Pressable onPress={() => setGender('Women')}>
               <FontAwesome
                 name="circle"
                 size={26}
@@ -102,8 +114,8 @@ const GenderScreen = () => {
               alignItems: 'center',
               justifyContent: 'space-between',
             }}>
-            <Text style={{fontWeight: '500', fontSize: 15 ,color:'red'}}>Non-binary</Text>
-            <Pressable >
+            <Text style={{fontWeight: '500', color:'blue',fontSize: 15}}>Non-binary</Text>
+            <Pressable onPress={() => setGender('Non-binary')}>
               <FontAwesome
                 name="circle"
                 size={26}
@@ -121,10 +133,8 @@ const GenderScreen = () => {
             gap: 8,
           }}>
           <AntDesign name="checksquare" size={26} color="#581845" />
-          <Text style={{fontSize: 15}}>Visible on profile</Text>
+          <Text style={{fontSize: 15,color:'blue'}}>Visible on profile</Text>
         </View>
-
-
         <TouchableOpacity
         onPress={handleNext}
           activeOpacity={0.8}
