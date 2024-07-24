@@ -1,6 +1,8 @@
 # Local Dost
 
-![Local Dost Logo](./LOGO.png)
+<p align="center">
+  <img src="./LOGO.png" alt="Local Dost Logo" />
+</p>
 
 ## Overview
 
