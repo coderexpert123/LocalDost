@@ -21,6 +21,7 @@ import StackNavigator from './Navigation/Stacknavigator';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { ModalPortal } from 'react-native-modals';
 
 
 function Section({ children, title }) {
@@ -60,6 +61,7 @@ function App() {
   return (
     <>
       <StackNavigator />
+      <ModalPortal/>
     </>
 
 

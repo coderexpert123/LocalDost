@@ -14,24 +14,8 @@ import {
  
   const LocationScreen = () => {
     const navigation = useNavigation();
-    const [region, setRegion] = useState({
-      latitude: 0,
-      longitude: 0,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
-    });
-    const [location, setLocation] = useState('');
-    console.log('location', location);
-    const [coordinates] = useState([
-      {
-        latitude: 12.9716,
-        longitude: 77.5946,
-      },
-      {
-        latitude: 13.0451,
-        longitude: 77.6269,
-      },
-    ]);
+ 
+   
  
    const handleNext = () => {
  
@@ -73,34 +57,6 @@ import {
             }}>
             Where do you live?
           </Text>
-          <MapView
-            initialRegion={{
-              latitude: 13.0451,
-              longitude: 77.6269,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-            style={{width: '100%', height: 500, marginTop: 20, borderRadius: 5}}>
-        
-            <Marker
-      
-              draggable
-              coordinate={coordinates[1]}>
-              <View
-                style={{backgroundColor: 'black', padding: 12, borderRadius: 20}}>
-                <Text
-                  style={{
-                    textAlign: 'center',
-                    color: 'white',
-                    fontSize: 14,
-                    fontWeight: '500',
-                  }}>
-                  {location}
-                </Text>
-              </View>
-            </Marker>
-          </MapView>
-         
           <TouchableOpacity
             onPress={handleNext}
             activeOpacity={0.8}
