@@ -9,9 +9,19 @@ import { getRegistrationProgress, saveRegistrationProgress } from '../registrati
 const HomeTownScreen = () => {
     const [hometown,setHometown] = useState("");
     const navigation = useNavigation();
-   
+    useEffect(() => {
+        getRegistrationProgress('Hometown').then(progressData => {
+          if (progressData) {
+            setHometown(progressData.hometown || '');
+          }
+        });
+      }, []);
+    
       const handleNext = () => {
-     
+        if (hometown.trim() !== '') {
+          // Save the current progress data including the name
+          saveRegistrationProgress('Hometown', {hometown});
+        }
         // Navigate to the next screen
         navigation.navigate('Photos');
       };
@@ -43,6 +53,7 @@ const HomeTownScreen = () => {
             fontSize: 25,
             fontWeight: 'bold',
             fontFamily: 'GeezaPro-Bold',
+            color:'red',
             marginTop: 15,
           }}>
           Where's your home Town?
@@ -60,6 +71,7 @@ const HomeTownScreen = () => {
             borderBottomColor: 'black',
             borderBottomWidth: 1,
             paddingBottom: 10,
+            color:'blue',
             fontFamily: 'GeezaPro-Bold',
           }}
           placeholder="HomeTown"

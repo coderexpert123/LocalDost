@@ -12,6 +12,10 @@ import {
   import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
   import Fontisto from 'react-native-vector-icons/Fontisto';
   import {useNavigation} from '@react-navigation/native';
+  import {
+    getRegistrationProgress,
+    saveRegistrationProgress,
+  } from '../registrationUtils';
  
   const Password = () => {
     const navigation = useNavigation();
@@ -19,6 +23,13 @@ import {
   
     const handleNext = () => {
     
+
+      if (password.trim() !== '') {
+
+        saveRegistrationProgress('Password', { password });
+
+      }
+
       // Navigate to the next screen
       navigation.navigate('Birth');
     };
@@ -49,6 +60,7 @@ import {
             style={{
               fontSize: 25,
               fontWeight: 'bold',
+              color:'red',
               fontFamily: 'GeezaPro-Bold',
               marginTop: 15,
             }}>
@@ -65,6 +77,7 @@ import {
               marginVertical: 10,
               fontSize: password ? 22 : 22,
               marginTop: 25,
+              color:'blue',
               borderBottomColor: 'black',
               borderBottomWidth: 1,
               paddingBottom: 10,

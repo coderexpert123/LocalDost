@@ -12,13 +12,30 @@ import {
   import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
   import Fontisto from 'react-native-vector-icons/Fontisto';
   import {useNavigation} from '@react-navigation/native';
-  
+  import AsyncStorage from '@react-native-async-storage/async-storage';
+  import {
+    getRegistrationProgress,
+    saveRegistrationProgress,
+  } from '../registrationUtils';
+ 
   const EmailScreen = () => {
     const [email, setEmail] = useState('');
     const navigation = useNavigation();
  
-  
+      //use effect for shoing data after exit
+      useEffect(() => {
+        getRegistrationProgress('Email').then(progressData => {
+          if (progressData) {
+            setEmail(progressData.email || '');
+          }
+        });
+      }, []);
+    
     const handleNext = () => {
+      if (email.trim() !== '') {
+        saveRegistrationProgress('Email', { email });
+
+      }
 
       // Navigate to the next screen
       navigation.navigate('Password');
@@ -50,6 +67,7 @@ import {
             style={{
               fontSize: 25,
               fontWeight: 'bold',
+              color:'red',
               fontFamily: 'GeezaPro-Bold',
               marginTop: 15,
             }}>
@@ -69,6 +87,7 @@ import {
               marginVertical: 10,
               fontSize: email ? 22 : 22,
               marginTop: 25,
+              color:'blue',
               borderBottomColor: 'black',
               borderBottomWidth: 1,
               paddingBottom: 10,
