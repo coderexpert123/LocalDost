@@ -69,22 +69,108 @@ app.post('/register', async (req, res) => {
   }
 });
 
-// app.get('/user', async (req, res) => {
-//   try {
-//     // Get the user details based on the user ID from the authentication token
-//     const userId = req.user.id; // Assuming the user ID is stored in the request object after authentication
-//     const user = await User.findById(userId);
 
-//     if (!user) {
-//       return res.status(404).json({message: 'User not found'});
-//     }
 
-//     res.status(200).json(user);
-//   } catch (error) {
-//     console.error('Error fetching user details:', error);
-//     res.status(500).json({message: 'Internal server error'});
-//   }
-// });
+//fetch users data
+app.get('/users/:userId', async (req, res) => {
+  try {
+    const {userId} = req.params;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(500).json({message: 'User not found'});
+    }
+
+    return res.status(200).json({user});
+  } catch (error) {
+    res.status(500).json({message: 'Error fetching the user details'});
+  }
+});
 
  
- 
+ //endpoint to login
+app.post('/login', async (req, res) => {
+  try {
+    const {email, password} = req.body;
+
+    //check if the user exists already
+    const user = await User.findOne({email});
+    if (!user) {
+      return res.status(401).json({message: 'Invalid email or password'});
+    }
+
+    //check in password is correct
+    if (user.password !== password) {
+      return res.status(401).json({message: 'Invalide password'});
+    }
+
+    const secretKey = crypto.randomBytes(32).toString('hex');
+
+    const token = jwt.sign({userId: user._id}, secretKey);
+
+    return res.status(200).json({token});
+  } catch (error) {
+    res.status(500).json({message: 'login failed'});
+  }
+});
+
+
+
+
+
+//match user
+app.get('/matches', async (req, res) => {
+  try {
+    const {userId} = req.query;
+
+    // Fetch user's dating preferences and type
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({message: 'User not found'});
+    }
+
+    let filter = {}; // Initialize filter as an empty object
+
+    if (user.gender === 'Men') {
+      filter.gender = 'Women';
+    } else if (user.gender === 'Women') {
+      filter.gender = 'Men';
+    }
+
+    // Construct query based on dating preferences and type
+    let query = {
+      _id: {$ne: userId},
+    };
+
+    // if (user.datingPreferences && user.datingPreferences.length > 0) {
+    //   filter.datingPreferences = user.datingPreferences;
+    // }
+    if (user.type) {
+      filter.type = user.type; // Assuming user.type is a single value
+    }
+
+    const currentUser = await User.findById(userId)
+      .populate('matches', '_id')
+      .populate('likedProfiles', '_id');
+
+    // Extract IDs of friends
+    const friendIds = currentUser.matches.map(friend => friend._id);
+
+    // Extract IDs of crushes
+    const crushIds = currentUser.likedProfiles.map(crush => crush._id);
+
+    console.log('filter', filter);
+
+    // Fetch matches based on query
+    const matches = await User.find(filter)
+      .where('_id')
+      .nin([userId, ...friendIds, ...crushIds]);
+
+    return res.status(200).json({matches});
+
+  } catch (error) {
+    console.error('Error fetching matches:', error);
+    res.status(500).json({message: 'Internal server error'});
+  }
+});
