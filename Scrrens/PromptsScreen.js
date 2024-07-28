@@ -23,6 +23,8 @@ import {
   
   
     const handleNext = () => {
+    // Save the current progress data including the image URLs
+    saveRegistrationProgress('Prompts', {prompts: route?.params?.prompts });
      // Navigate to the next screen
       navigation.navigate('PreFinal'); // Navigate to the appropriate screen
     };
