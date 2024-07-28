@@ -44,6 +44,9 @@ import { AuthContext } from '../AuthContext';
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
+  const {isLoading, token} = useContext(AuthContext);
+  // Ensure token is properly initialized
+  console.log('token:', token);
 
   function BottomTab() {
     return (
@@ -241,7 +244,7 @@ const StackNavigator = () => {
   return (
     <NavigationContainer>
 
-      <AuthStack />
+{token === null || token === '' ? <AuthStack /> : <MainStack />}
 
     </NavigationContainer>
 

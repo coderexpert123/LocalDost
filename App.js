@@ -22,6 +22,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ModalPortal } from 'react-native-modals';
+import { AuthProvider } from './AuthContext';
 
 
 function Section({ children, title }) {
@@ -60,10 +61,14 @@ function App() {
 
   return (
     <>
-      <StackNavigator />
-      <ModalPortal/>
-    </>
+      <AuthProvider>
+        <>
+          <StackNavigator />
+          <ModalPortal />
+        </>
+      </AuthProvider>
 
+    </>
 
   );
 }
